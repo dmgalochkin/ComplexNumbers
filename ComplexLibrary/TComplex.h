@@ -35,6 +35,8 @@ public:
   bool operator!= (const TComplex <T>& p);
 
   T Abs();
+  void PrintTrigonometricForm();
+  TComplex Power(double p);
 
   template <class V>
   friend std::ostream& operator <<(std::ostream& o, TComplex<V>& p);
@@ -187,6 +189,35 @@ template <class T>
 T TComplex<T>::Abs()
 {
  return std::sqrt(re * re + im * im);
+}
+
+template <class T>
+void TComplex<T>::PrintTrigonometricForm()
+{
+  T r = Abs();
+  if (r == 0)
+  {
+    std::cout << "0";
+    return;
+  }
+  T phi = std::atan2(im, re);
+  std::cout << r << " * (cos(" << phi << ") + i * sin(" << phi << "))";
+}
+
+template <class T>
+TComplex<T> TComplex<T>::Power(double p)
+{
+  if (re == 0 && im == 0) {
+    if (p <= 0) throw std::invalid_argument("Can't raise zero to non positive power");
+    return TComplex(0, 0);
+  }
+
+  T r = Abs();
+  T phi = std::atan2(im, re);
+  T newR = std::pow(r, p);
+  T newPhi = p * phi;
+
+  return TComplex(newR * std::cos(newPhi), newR * std::sin(newPhi));
 }
 
 template<class V>

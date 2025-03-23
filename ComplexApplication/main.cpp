@@ -1,6 +1,8 @@
 #include <iostream>
-
+#include "TComplex.h"
 int main()
 {
-  std::cout << "Hello world!" << '\n';
+  TComplex<double> c(3.0, 4.0);
+  std::cout << c.Abs() << '\n';
+  c.PrintTrigonometricForm();
 }
